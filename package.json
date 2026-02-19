@@ -1,0 +1,12 @@
+{
+  "name": "mckinsey-ecosystem-game",
+  "version": "1.0.0",
+  "description": "McKinsey GBA – Sports Event Ecosystem Planning Game",
+  "scripts": {
+    "dev": "vite",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}
