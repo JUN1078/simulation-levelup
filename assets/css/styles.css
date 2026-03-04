@@ -298,10 +298,27 @@ canvas.radar{border-radius:10px}
 }
 
 /* ══════════════════════════════════════════
-   NES.CSS DARK THEME OVERRIDES
+   CARBON DESIGN SYSTEM OVERRIDES (v10, g100 dark)
    ══════════════════════════════════════════ */
 
-/* 1. Reset body (NES.css forces Press Start 2P + white bg globally) */
+/* 1. Carbon g100 dark palette — override CSS variables */
+:root{
+  --bg:#161616;
+  --card:#262626;
+  --card2:#393939;
+  --border:#525252;
+  --primary:#4589ff;
+  --accent:#42be65;
+  --warn:#f1c21b;
+  --danger:#fa4d56;
+  --text:#f4f4f4;
+  --muted:#8d8d8d;
+  --font:'IBM Plex Sans','Helvetica Neue',Arial,sans-serif;
+}
+
+/* 2. Body/global resets — Carbon sets white bg & its own font */
+*,*::before,*::after{box-sizing:border-box}
+html{font-size:16px}
 body{
   font-family:var(--font);
   background-color:var(--bg);
@@ -309,259 +326,252 @@ body{
   padding:0;
   margin:0;
 }
-/* NES.css resets html font to Press Start 2P — counter that for base text */
-html{font-size:16px}
-*,*::before,*::after{box-sizing:border-box}
-
-/* 2. Press Start 2P — applied selectively for retro feel */
-.brand,
-.hero-tag,
-.section-title,
-.sim-title,
-.preview-title,
-.nes-btn,
-.tab-btn,
-.grade-label{
-  font-family:'Press Start 2P',cursive;
+h1,h2,h3,h4,h5,h6,p,label,input,select,textarea,table,button{
+  font-family:var(--font);
 }
-.brand{font-size:11px;letter-spacing:2px}
-.hero-tag{font-size:9px;letter-spacing:1px}
-.section-title{font-size:9px;letter-spacing:.5px;line-height:1.6}
-.sim-title{font-size:16px}
-.preview-title{font-size:8px;letter-spacing:.5px}
-.grade-label{font-size:14px}
+.hero-title{font-size:38px;font-weight:700;line-height:1.15}
+.hero-title em{font-style:normal;color:var(--primary)}
 
-/* 3. NES.css button overrides — keep pixel border, adapt colors */
-.nes-btn{
-  font-size:10px;
-  line-height:1.4;
-  white-space:normal;
-  word-break:break-word;
+/* 3. Carbon button overrides */
+.bx--btn{
+  font-family:var(--font);
+  font-size:14px;
+  font-weight:400;
+  border-radius:0;
+  letter-spacing:.16px;
+  min-height:40px;
+  padding:10px 20px;
+  cursor:pointer;
+  transition:background-color .11s,color .11s,border-color .11s;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  text-decoration:none;
+  white-space:nowrap;
 }
-.btn.nes-btn.btn-primary,.nes-btn.is-primary{
-  background-color:#209cee;
+.bx--btn--primary{
+  background-color:var(--primary);
+  border:1px solid transparent;
   color:#fff;
 }
-.btn.nes-btn.btn-accent,.nes-btn.is-success{
-  background-color:#4aa52e;
-  color:#fff;
+.bx--btn--primary:hover{background-color:#0353e9;color:#fff}
+.bx--btn--primary:active{background-color:#002d9c}
+.bx--btn--tertiary{
+  background-color:transparent;
+  border:1px solid var(--primary);
+  color:var(--primary);
 }
-/* Tab buttons — default (unactive) NES look */
-.tab-btn.nes-btn{
-  background-color:var(--card2);
+.bx--btn--tertiary:hover{background-color:var(--primary);color:#fff}
+/* Enforce sizing from existing .btn classes */
+.btn.bx--btn{padding:12px 28px;font-size:14px;font-weight:600}
+.btn-lg.bx--btn{padding:14px 32px;font-size:16px}
+.btn-block{width:100%;justify-content:center}
+
+/* 4. Carbon content switcher (tabs) */
+.bx--content-switcher{
+  display:flex;
+  border-bottom:1px solid var(--border);
+  gap:0;
+  margin-bottom:20px;
+}
+.bx--content-switcher-btn{
+  background:transparent;
+  border:none;
+  border-bottom:2px solid transparent;
   color:var(--muted);
-  border:0;
-  font-size:8px;
-  padding:8px 12px;
-  margin:2px;
+  cursor:pointer;
+  font-family:var(--font);
+  font-size:14px;
+  font-weight:400;
+  padding:10px 16px;
+  transition:.15s;
+  white-space:nowrap;
 }
-.tab-btn.nes-btn:hover{
-  background-color:var(--card);
-  color:var(--text);
+.bx--content-switcher-btn:hover{color:var(--text);background:rgba(255,255,255,.05)}
+.bx--content-switcher-btn.active{
+  color:var(--primary);
+  border-bottom:2px solid var(--primary);
+  font-weight:600;
 }
-.tab-btn.nes-btn.active{
-  background-color:#209cee;
-  color:#fff;
-}
-/* Prevent NES.css ::after border-box from blocking clicks */
-.nes-btn::after{pointer-events:none}
 
-/* 4. NES container — dark theme adaptation */
-.nes-container{
+/* 5. Carbon tile → game cards */
+.bx--tile{
   background-color:var(--card);
-  border-color:var(--border);
-  border-width:4px;
+  border:1px solid var(--border);
   border-radius:0;
   color:var(--text);
-  margin:0 0 16px 0;
-  padding:20px;
-}
-/* section-card NES container */
-.section-card.nes-container{
-  border-radius:0;
   padding:20px;
   margin-bottom:16px;
 }
-/* The outer shadow pseudo-element on .is-dark containers */
-.nes-container.is-dark{
-  background-color:var(--card2);
-  border-color:var(--muted);
-  color:var(--text);
+.section-card.bx--tile{padding:20px;margin-bottom:16px}
+/* Crisis tile */
+.crisis-box.bx--tile{
+  background-color:#2a1515;
+  border-color:var(--danger);
+  border-left:4px solid var(--danger);
 }
-.nes-container.is-dark::after{
-  background-color:var(--card2);
+/* Objectives tile */
+.objectives.bx--tile{
+  border-left:4px solid var(--warn);
 }
-/* NES with-title: title tab at top border */
-.nes-container.with-title>.title{
-  background-color:var(--card);
-  color:var(--primary);
-  font-family:'Press Start 2P',cursive;
-  font-size:9px;
-  letter-spacing:.5px;
-  padding:0 8px;
-  margin:-1.8rem 0 1rem;
-}
-/* Crisis box NES container */
-.crisis-box.nes-container{
-  background-color:#1a0a0a;
-  border-color:#5a1a1a;
-}
-.crisis-box.nes-container.with-title>.title{
-  background-color:#1a0a0a;
-  color:var(--danger);
-}
-/* Objectives NES container */
-.objectives.nes-container{
-  background-color:var(--card);
-  border-color:var(--warn);
-}
-.objectives.nes-container.with-title>.title{
-  background-color:var(--card);
-  color:var(--warn);
-}
-/* Profit-big NES container */
-.profit-big.nes-container{
-  background-color:#0a1628;
+/* Profit big tile */
+.profit-big.bx--tile{
+  background-color:#1a2332;
   border-color:var(--border);
   text-align:center;
-  padding:14px;
+  padding:16px;
   margin:0;
 }
-/* Sim-totals NES container */
-.sim-totals.nes-container{
-  background-color:var(--card);
-  border-color:var(--border);
-  padding:20px;
-  margin-top:20px;
-  opacity:0;
-  transition:.5s;
-}
-.sim-totals.nes-container.visible{opacity:1}
-/* Constraint list NES container */
-.constraint-list.nes-container{
-  background-color:var(--card);
-  border-color:var(--border);
-  padding:22px;
-  margin-bottom:20px;
-}
-/* Bar sections NES container */
-.bar-section.nes-container{
-  background-color:var(--card);
-  border-color:var(--border);
-  padding:22px;
-  margin-bottom:20px;
-}
-/* Competency section NES container */
-.competency-section.nes-container{
-  background-color:var(--card);
-  border-color:var(--border);
-  padding:22px;
-  margin-bottom:20px;
-}
-/* Assessment box NES container */
-.assessment-box.nes-container{
-  background-color:var(--card);
-  border-color:var(--border);
-  padding:24px;
-  margin-bottom:20px;
-}
-.assessment-box.nes-container.with-title>.title{
-  background-color:var(--card);
-  color:var(--primary);
-}
-
-/* 5. NES table — dark theme */
-.nes-table,.cabor-table.nes-table{
-  table-layout:auto;
-  background-color:transparent;
-  color:var(--text);
-  width:100%;
-}
-.cabor-table.nes-table th,
-.cabor-table.nes-table td{
-  border-color:var(--border);
-  color:var(--text);
-}
-.cabor-table.nes-table th::before,
-.cabor-table.nes-table th::after,
-.cabor-table.nes-table td::before,
-.cabor-table.nes-table td::after{
-  background-color:var(--border);
-}
-.cabor-table.nes-table thead tr{
-  background-color:var(--card2);
-}
-
-/* 6a. Preserve dark-theme for elements NES.css may reset */
-.venue-card,.venue-slot,.slider-val,.c-badge,.score-card,.round-card{
-  background-color:var(--card);
-}
-.venue-card{background:#0a1628}
-.slider-val{background:var(--card2);border:1px solid var(--border);color:var(--text)}
-/* Top bar should stay dark (NES.css body padding might push it) */
-#topbar{background:#0a1628;border-bottom:1px solid var(--border)}
-
-/* 6. NES checkbox dark theme */
-.nes-checkbox.is-dark+span::before{
-  color:var(--text);
-}
-/* Prevent checkbox span margin from causing layout issues in our custom label */
-.nes-checkbox-label .nes-checkbox{
-  margin-left:0;
-}
-.nes-checkbox-label .nes-checkbox+span{
-  margin-left:0;
-}
-
-/* 7. Heading/text resets (NES.css may reset these) */
-h1,h2,h3,h4,h5,h6{font-family:var(--font)}
-.hero-title{font-family:var(--font);font-size:38px;font-weight:800}
-.hero-title em{font-family:var(--font)}
-input,select,textarea,label{font-family:var(--font)}
-table{font-family:var(--font)}
-p{font-family:var(--font)}
-
-/* 8. Score card improvements */
-.score-card.nes-container{
-  background-color:var(--card);
-  border-color:var(--border);
-  padding:22px;
-  text-align:center;
-}
-.score-card.nes-container.good{border-color:var(--accent)}
-.score-card.nes-container.bad{border-color:var(--danger)}
-.score-card.nes-container.warn{border-color:var(--warn)}
-.s-label{font-family:'Press Start 2P',cursive;font-size:8px;line-height:1.6}
-
-/* 9. Sim-step NES container states */
-.sim-step.nes-container{
+/* Sim totals tile */
+.sim-totals.bx--tile{padding:20px;margin-top:20px;opacity:0;transition:.5s}
+.sim-totals.bx--tile.visible{opacity:1}
+/* Sim step tiles */
+.sim-step.bx--tile{
   background-color:var(--card);
   border-color:var(--border);
   padding:14px 20px;
-  margin-bottom:10px;
-  opacity:.3;
+  margin-bottom:8px;
+  opacity:.35;
   transition:.4s;
   display:flex;align-items:center;gap:14px;
 }
-.sim-step.nes-container.running{opacity:1;border-color:var(--primary)}
-.sim-step.nes-container.done{opacity:1;border-color:var(--accent)}
-
-/* 10. Info cards in briefing */
-.info-card.nes-container{
-  background-color:var(--card);
-  border-color:var(--border);
-  padding:20px;
-  margin:0;
+.sim-step.bx--tile.running{opacity:1;border-color:var(--primary);border-left:3px solid var(--primary)}
+.sim-step.bx--tile.done{opacity:1;border-color:var(--accent);border-left:3px solid var(--accent)}
+/* Constraint list */
+.constraint-list.bx--tile,.bar-section.bx--tile,
+.competency-section.bx--tile,.assessment-box.bx--tile{
+  padding:22px;margin-bottom:20px;
 }
-
-/* 12. Round history cards */
-.round-card.nes-container{
+/* Score cards */
+.score-card.bx--tile{
   background-color:var(--card);
-  border-color:var(--border);
-  padding:16px;
+  padding:22px;
   text-align:center;
-  opacity:.4;
   margin:0;
+  border-top:3px solid var(--border);
 }
-.round-card.nes-container.done{opacity:1;border-color:var(--accent)}
-.round-card.nes-container.active{opacity:1;border-color:var(--primary)}
+.score-card.bx--tile.good{border-top-color:var(--accent)}
+.score-card.bx--tile.bad{border-top-color:var(--danger)}
+.score-card.bx--tile.warn{border-top-color:var(--warn)}
+/* Round history cards */
+.round-card.bx--tile{
+  padding:16px;text-align:center;opacity:.4;margin:0;
+  border-top:3px solid var(--border);
+}
+.round-card.bx--tile.done{opacity:1;border-top-color:var(--accent)}
+.round-card.bx--tile.active{opacity:1;border-top-color:var(--primary)}
+/* Info cards */
+.info-card.bx--tile{padding:20px;margin:0}
+
+/* 6. Carbon data table */
+.bx--data-table,.cabor-table.bx--data-table{
+  width:100%;
+  border-collapse:collapse;
+  background-color:var(--card);
+  table-layout:auto;
+}
+.cabor-table.bx--data-table th{
+  background-color:var(--card2);
+  color:var(--muted);
+  font-size:11px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  padding:10px 12px;
+  border-bottom:2px solid var(--border);
+  text-align:left;
+  white-space:nowrap;
+}
+.cabor-table.bx--data-table td{
+  padding:10px 12px;
+  border-bottom:1px solid var(--border);
+  color:var(--text);
+  font-size:13px;
+  vertical-align:middle;
+  background:transparent;
+}
+.cabor-table.bx--data-table .cabor-row:hover td{background-color:rgba(69,137,255,.08)}
+.cabor-table.bx--data-table .cabor-row.selected td{background-color:rgba(69,137,255,.12)}
+.cabor-table.bx--data-table .cabor-row.unavailable td{opacity:.38}
+
+/* 7. Carbon checkbox */
+.bx--checkbox-wrapper{
+  background-color:var(--card2);
+  border:1px solid var(--border);
+  padding:14px 16px;
+  margin-bottom:10px;
+  position:relative;
+}
+.bx--checkbox{
+  position:absolute;
+  width:1px;height:1px;
+  opacity:0;margin:0;
+}
+.bx--checkbox-label{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  cursor:pointer;
+  color:var(--text);
+  font-size:13px;
+  font-weight:500;
+  padding-left:28px;
+  position:relative;
+  user-select:none;
+}
+.bx--checkbox-label::before{
+  content:'';
+  position:absolute;
+  left:0;top:0;
+  width:18px;height:18px;
+  border:2px solid var(--muted);
+  background:transparent;
+  flex-shrink:0;
+  transition:background .11s,border-color .11s;
+}
+.bx--checkbox:checked+.bx--checkbox-label::before{
+  background-color:var(--primary);
+  border-color:var(--primary);
+}
+.bx--checkbox:checked+.bx--checkbox-label::after{
+  content:'';
+  position:absolute;
+  left:3px;top:8px;
+  width:12px;height:6px;
+  border-left:2px solid #fff;
+  border-bottom:2px solid #fff;
+  transform:rotate(-45deg);
+}
+.bx--form__helper-text{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:6px;
+  padding-left:28px;
+  line-height:1.5;
+}
+
+/* 8. Element resets after Carbon global CSS */
+.slider-val{background:var(--card2);border:1px solid var(--border);color:var(--text)}
+.venue-card{background:#1c1c1c;border-color:var(--border)}
+.venue-card.selected{background:rgba(69,137,255,.1);border-color:var(--primary)}
+#topbar{background:#161616;border-bottom:1px solid var(--border)}
+.brand{font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--primary);margin-bottom:16px}
+.preview-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:4px}
+.hero-tag{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--primary);text-transform:uppercase;margin-bottom:12px}
+.s-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+.grade-label{font-size:20px;font-weight:700;text-align:center;margin-bottom:32px}
+.sim-title{font-size:22px;font-weight:600}
+
+/* 9. Carbon inline notification for penalty */
+.penalty-notice{
+  background-color:#2a1515;
+  border-left:4px solid var(--danger);
+  border:1px solid var(--danger);
+  border-left-width:4px;
+  padding:16px 20px;
+  margin-bottom:16px;
+  font-size:13px;
+  color:#ffb3b8;
+}
